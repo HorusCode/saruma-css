@@ -4,7 +4,12 @@
   "description": "Saruma CSS Framework",
   "main": "saruma.scss",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm run build-sass && npm run build-autoprefix && npm run build-cleancss",
+    "build-autoprefix": "postcss --use autoprefixer --map false --output dist/saruma.css dist/saruma.css",
+    "build-cleancss": "cleancss -o dist/saruma.min.css dist/saruma.css",
+    "build-sass": "sass saruma.scss dist/saruma.css",
+    "clean": "rimraf css",
+    "dev": "npm run build-sass -- --watch"
   },
   "repository": {
     "type": "git",
@@ -21,5 +26,11 @@
   "bugs": {
     "url": "https://github.com/HorusCode/saruma-css/issues"
   },
-  "homepage": "https://github.com/HorusCode/saruma-css#readme"
+  "homepage": "https://github.com/HorusCode/saruma-css#readme",
+  "devDependencies": {
+    "autoprefixer": "^10.4.13",
+    "clean-css-cli": "^5.6.1",
+    "postcss-cli": "^10.1.0",
+    "rimraf": "^3.0.2"
+  }
 }
