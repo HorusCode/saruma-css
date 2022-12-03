@@ -1,0 +1,44 @@
+$loading-background-legacy: #7f7f7f !default;
+$loading-background: rgba(240,240,240,0.6) !default;
+$loading-icon-size: 3em !default;
+$loading-full-page-icon-size: 5em !default;
+$loading-color: $primary;
+
+.s-loading {
+    @include overlay;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    z-index: 19;
+    &.s-fullpage {
+        position: fixed;
+        z-index: 999;
+        .s-loading__icon {
+            &::after, &::before {
+                @include center($loading-full-page-icon-size);
+                width: $loading-full-page-icon-size;
+                height: $loading-full-page-icon-size;
+            }
+        }
+    }
+    &__overlay {
+        @include overlay;
+        background:$loading-background;
+    }
+    &__icon {
+        display: inline-block;
+        color: transparent !important;
+        pointer-events: none;
+        line-height: $body-line-height;
+        @extend %loader;
+        &::after, &::before {
+            @include center($loading-icon-size);
+            width: $loading-icon-size;
+            height: $loading-icon-size;
+            border-color: $loading-color;
+        }
+
+    }
+}
+

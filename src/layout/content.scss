@@ -1,0 +1,18 @@
+$content-shadow: $default-shadow !default;
+
+.s-content {
+    display: grid;
+    grid-area: c;
+    box-shadow: $content-shadow;
+    margin: 0 1rem;
+    grid-template-rows: 5rem 1fr;
+
+    &__header {
+        padding: 20px;
+        align-self: center;
+    }
+
+    &__body {
+        padding: 20px;
+    }
+}

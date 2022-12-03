@@ -1,0 +1,84 @@
+$alignments: ('center', 'justify' 'left', 'right');
+
+@mixin typography-size($target:'') {
+    @each $size in $sizes {
+        $i: index($sizes, $size);
+        .s-size--#{$i}#{if($target == '', '', '-' + $target)} {
+            font-size: $size !important;
+        }
+    }
+}
+
+@include typography-size();
+
+
+@each $text-align in $alignments {
+    .s-text--#{$text-align} {
+        text-align: #{$text-align} !important
+    }
+
+
+    @include mob {
+        .s-text-mob--#{$text-align}{
+            text-align: #{$text-align} !important;
+        }
+    }
+    @include tab {
+        .s-text-tab--#{$text-align} {
+            text-align: #{$text-align} !important;
+        }
+    }
+    @include tab-only {
+        .s-text-tab-only--#{$text-align} {
+            text-align: #{$text-align} !important;
+        }
+    }
+    @include touch {
+        .s-text-touch--#{$text-align} {
+            text-align: #{$text-align} !important;
+        }
+    }
+    @include desk {
+        .s-text-desk--#{$text-align} {
+            text-align: #{$text-align} !important;
+        }
+
+    }
+    @include desk-only {
+        .s-text-desk-only--#{$text-align} {
+            text-align: #{$text-align} !important;
+        }
+    }
+    @include wide {
+        .s-text-wide--#{$text-align} {
+            text-align: #{$text-align} !important;
+        }
+    }
+    @include wide-only {
+        .s-text-wide-only--#{$text-align} {
+            text-align: #{$text-align} !important;
+        }
+    }
+    @include fullhd {
+        .s-text-fullhd--#{$text-align} {
+            text-align: #{$text-align} !important;
+        }
+    }
+
+
+}
+
+.s-text--bold {
+    font-weight: $weight-bold;
+}
+
+.s-text--title {
+    color: $text;
+    font-weight: $weight-semibold;
+    font-size: $size-large;
+}
+
+.s-text--dashed {
+    text-decoration: underline;
+    text-decoration-style: dashed;
+}

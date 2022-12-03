@@ -1,0 +1,266 @@
+$dropdown-menu-min-width: 12rem !default;
+
+$dropdown-content-background-color: $scheme-main !default;
+$dropdown-content-arrow: $link !default;
+$dropdown-content-offset: 4px !default;
+$dropdown-content-padding-bottom: 0.5rem !default;
+$dropdown-content-padding-top: 0.5rem !default;
+$dropdown-content-radius: $radius !default;
+$dropdown-content-shadow: 0 0.5em 1em -0.125em rgba($scheme-invert, 0.1), 0 0px 0 1px rgba($scheme-invert, 0.02) !default;
+$dropdown-content-z: 20 !default;
+
+$dropdown-item-color: $text !default;
+$dropdown-item-hover-color: $scheme-invert !default;
+$dropdown-item-hover-background-color: $background !default;
+$dropdown-item-active-color: $link-invert !default;
+$dropdown-item-active-background-color: $link !default;
+$dropdown-item-line-height: $body-line-height !default;
+
+$dropdown-divider-background-color: $border-light !default;
+
+$dropdown-mobile-breakpoint: $desktop !default;
+$dropdown-background-color: rgba($scheme-invert, 0.86) !default;
+$dropdown-disabled-opacity: 0.5 !default;
+
+.s-dropdown {
+    display: inline-flex;
+    position: relative;
+    vertical-align: top;
+
+    & + & {
+        margin-left: 0.5em;
+    }
+
+    .s-background {
+        @include overlay;
+        position: fixed;
+        background-color: $dropdown-background-color;
+        z-index: 40;
+        cursor: pointer;
+        @media screen and (min-width: $dropdown-mobile-breakpoint) {
+            display: none;
+        }
+    }
+
+    &.s-dropdown__menu-animation {
+        .s-dropdown__menu {
+            display: block;
+        }
+    }
+
+
+    &__menu {
+        .s-link a {
+            @extend .s-dropdown__item;
+            padding-right: 3rem;
+            white-space: nowrap;
+        }
+    }
+
+    &.s-hoverable:not(.s-active) {
+        .s-dropdown__menu {
+            display: none;
+        }
+    }
+
+    &.s-hoverable {
+        &:hover {
+            .s-dropdown__menu {
+                display: inherit;
+            }
+        }
+    }
+
+    &.s-expanded {
+        width: 100%;
+
+        .s-dropdown__trigger {
+            width: 100%;
+        }
+
+        .s-dropdown__menu {
+            width: 100%;
+        }
+
+        &.s-mobile-modal {
+            .s-dropdown__menu {
+                max-width: 100%;
+            }
+        }
+    }
+
+    &:not(.s-disabled) {
+        .s-dropdown__menu {
+            .s-dropdown__item {
+                &.s-disabled {
+                    opacity: $dropdown-disabled-opacity;
+                }
+            }
+        }
+    }
+
+    .navbar-item {
+        height: 100%;
+    }
+
+    &.s-disabled {
+        opacity: $dropdown-disabled-opacity;
+        cursor: not-allowed;
+
+        .s-dropdown-trigger {
+            pointer-events: none;
+        }
+    }
+
+    &.s-inline {
+        .s-dropdown__menu {
+            position: static;
+            display: inline-block;
+            padding: 0;
+        }
+    }
+
+    &.s-top-right {
+        .s-dropdown-menu {
+            top: auto;
+            bottom: 100%;
+        }
+    }
+
+    &.s-top-left {
+        .s-dropdown__menu {
+            top: auto;
+            bottom: 100%;
+            right: 0;
+            left: auto;
+        }
+    }
+
+    &.s-bottom-left {
+        .s-dropdown__menu {
+            right: 0;
+            left: auto;
+        }
+    }
+
+    &.s-right {
+        .s-dropdown__menu {
+            left: auto;
+            right: 0;
+        }
+    }
+
+    &.s-top {
+        .s-dropdown__menu {
+            bottom: 100%;
+            padding-bottom: $dropdown-content-offset;
+            padding-top: initial;
+            top: auto;
+        }
+    }
+
+    @media screen and (max-width: $dropdown-mobile-breakpoint - 1px) {
+        &.s-mobile-modal {
+            > .s-dropdown__menu {
+                position: fixed !important;
+                width: calc(100vw - 40px);
+                max-width: 460px;
+                max-height: calc(100vh - 120px);
+                top: 25% !important;
+                left: 50% !important;
+                bottom: auto !important;
+                right: auto !important;
+                transform: translate3d(-50%, -25%, 0);
+                white-space: normal;
+                overflow-y: auto;
+                z-index: 50 !important;
+
+                > .s-dropdown__content {
+                    > .s-dropdown__item, > .s-link a {
+                        padding: 1rem 1.5rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.s-dropdown__item {
+    color: $dropdown-item-color;
+    display: block;
+    font-size: 0.875rem;
+    padding: 0.375rem 1rem;
+    position: relative;
+    cursor: pointer;
+    &:hover {
+        background-color: $dropdown-item-hover-background-color;
+        color: $dropdown-item-hover-color;
+    }
+
+    &.s-disabled {
+        cursor: not-allowed;
+
+        &:hover {
+            background: inherit;
+            color: inherit;
+        }
+    }
+}
+
+a.s-dropdown__item,
+button.s-dropdown__item {
+    @include ltr-property("padding", 3rem);
+    text-align: inherit;
+    white-space: nowrap;
+    width: 100%;
+
+    &:hover {
+        background-color: $dropdown-item-hover-background-color;
+        color: $dropdown-item-hover-color;
+    }
+
+    &.is-active {
+        background-color: $dropdown-item-active-background-color;
+        color: $dropdown-item-active-color;
+    }
+}
+
+
+.s-dropdown__menu {
+    display: none;
+    @include ltr-position(0, false);
+    min-width: $dropdown-menu-min-width;
+    padding-top: $dropdown-content-offset;
+    position: absolute;
+    top: 100%;
+    z-index: $dropdown-content-z;
+}
+
+.s-dropdown__content {
+    background-color: $dropdown-content-background-color;
+    border-radius: $dropdown-content-radius;
+    box-shadow: $dropdown-content-shadow;
+    padding-bottom: $dropdown-content-padding-bottom;
+    padding-top: $dropdown-content-padding-top;
+}
+
+.s-dropdown__divider {
+    background-color: $dropdown-divider-background-color;
+    border: none;
+    display: block;
+    height: 1px;
+    margin: 0.5rem 0;
+}
+
+
+html.s-clipped-touch {
+    @include touch {
+        overflow: hidden !important;
+    }
+}
+
+
+
+
+
+

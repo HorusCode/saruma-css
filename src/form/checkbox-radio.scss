@@ -1,0 +1,128 @@
+$checkbox-active-background-color: $primary !default;
+$checkbox-background-color: transparent !default;
+$checkbox-border-color: $grey !default;
+$checkbox-border-radius: $radius !default;
+$checkbox-border-width: 2px !default;
+$checkbox-checkmark-color: $primary-invert !default;
+$checkbox-size: 1.25em !default;
+$checkbox-colors: $colors !default;
+
+%checkbox-radio {
+    cursor: pointer;
+    display: inline-block;
+    line-height: 1.25;
+    position: relative;
+    input {
+        cursor: pointer;
+    }
+    &:hover {
+        color: $input-hover-color;
+    }
+
+    &.s-disabled,
+    fieldset[disabled='true'] &,
+    input[disabled='true'] {
+        color: $input-disabled-color;
+        cursor: not-allowed;
+    }
+}
+
+.s-checkbox {
+    @extend %checkbox-radio;
+    &.checkbox {
+        @extend %unselectable;
+        outline: none;
+        display: inline-flex;
+        align-items: center;
+        &:not(.s-btn) {
+            margin-right: 0.5em;
+            & + .checkbox:last-child {
+                margin-right: 0;
+            }
+        }
+        input[type=checkbox] {
+            position: absolute;
+            left: 0;
+            opacity: 0;
+            outline: none;
+            z-index: -1;
+            + .check {
+                width: $checkbox-size;
+                height: $checkbox-size;
+                flex-shrink: 0;
+                border-radius: $checkbox-border-radius;
+                border: $checkbox-border-width solid $checkbox-border-color;
+                transition: background $speed-slow $easing;
+                background: $checkbox-background-color
+            }
+            &:checked + .check {
+                background: $checkbox-active-background-color url(checkmark($checkbox-checkmark-color)) no-repeat center center;
+                border-color: $checkbox-active-background-color;
+                @each $name, $pair in $checkbox-colors {
+                    $color: nth($pair, 1);
+                    $color-invert: nth($pair, 2);
+                    @debug $name;
+                    &.s-#{$name} {
+                        background: $color url(checkmark($color-invert)) no-repeat center center;
+                        border-color: $color;
+                    }
+                }
+            }
+            &:indeterminate + .check {
+                background: $checkbox-active-background-color url(indeterminate($checkbox-checkmark-color)) no-repeat center center;
+                border-color: $checkbox-active-background-color;
+                @each $name, $pair in $checkbox-colors {
+                    $color: nth($pair, 1);
+                    $color-invert: nth($pair, 2);
+                    &.s-#{$name} {
+                        background: $color url(indeterminate($color-invert)) no-repeat center center;
+                        border-color: $color;
+                    }
+                }
+            }
+            &:focus {
+                + .check {
+                    box-shadow: 0 0 0.5em rgba($grey, 0.8);
+                }
+                &:checked + .check {
+                    box-shadow: 0 0 0.5em rgba($checkbox-active-background-color, 0.8);
+                    @each $name, $pair in $checkbox-colors {
+                        $color: nth($pair, 1);
+                        &.s-#{$name} {
+                            box-shadow: 0 0 0.5em rgba($color, 0.8);
+                        }
+                    }
+                }
+            }
+        }
+        .s-control__label {
+            padding-left: $control-padding-horizontal;
+        }
+        &.s-btn {
+            display: flex;
+        }
+        &.s-disabled {
+            opacity: 0.5;
+        }
+        &:hover {
+            input[type=checkbox]:not(.s-disabled) + .check {
+                border-color: $checkbox-active-background-color;
+                @each $name, $pair in $checkbox-colors {
+                    $color: nth($pair, 1);
+                    &.s-#{$name} {
+                        border-color: $color;
+                    }
+                }
+            }
+        }
+        &.s-small {
+            @include control-small;
+        }
+        &.s-medium{
+            @include control-medium;
+        }
+        &.s-large {
+            @include control-large;
+        }
+    }
+}

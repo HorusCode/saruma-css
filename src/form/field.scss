@@ -1,0 +1,195 @@
+/*Input container field*/
+/*
+Пример кода
+<div class="s-field">
+   <label for="" class="s-label">Label Name</label>
+   <div class="s-control s-with-icon-right s-with-icon-left">
+      <input type="email" v-model="valueName" class="s-input s-rounded" placeholder="Write...">
+          <span class="s-icon s-right">
+              <i class="mdi mdi-email-outline"></i>
+          </span>
+          <span class="s-icon s-left">
+              <i class="mdi mdi-email-outline"></i>
+          </span>
+      <span class="s-field--message s-text--danger">message</span>
+    </div>
+ </div>
+
+*/
+
+
+
+
+.s-field {
+    &:not(:last-child) {
+        margin-bottom: 0.5rem;
+    }
+
+    &.s-with-tools {
+        display: flex;
+        justify-content: flex-start;
+
+        .s-control {
+            &:not(:last-child) {
+                @include ltr-property("margin", -1px);
+            }
+
+            &:not(:first-child):not(:last-child) {
+                .s-btn, .s-input, .s-select select {
+                    border-radius: 0;
+                }
+            }
+
+            &:first-child:not(:only-child) {
+                .s-btn, .s-input, .s-select select {
+                    @include ltr {
+                        border-bottom-right-radius: 0;
+                        border-top-right-radius: 0;
+                    }
+                    @include rtl {
+                        border-bottom-left-radius: 0;
+                        border-top-left-radius: 0;
+                    }
+                }
+            }
+
+            &:last-child:not(:only-child) {
+                .s-btn, .s-input, .s-select select {
+                    @include ltr {
+                        border-bottom-left-radius: 0;
+                        border-top-left-radius: 0;
+                    }
+                    @include rtl {
+                        border-bottom-right-radius: 0;
+                        border-top-right-radius: 0;
+                    }
+                }
+            }
+
+            .s-btn,
+            .s-input,
+            .s-select select {
+                &:not([disabled]) {
+                    &:hover,
+                    &.s-hovered {
+                        z-index: 2;
+                    }
+
+                    &:focus, &.s-focused, &:active, &.s-active {
+                        z-index: 3;
+
+                        &:hover {
+                            z-index: 4
+                        }
+                    }
+                }
+            }
+
+            &.s-expanded {
+                flex-grow: 1;
+                flex-shrink: 1;
+            }
+
+        }
+        &#{&}--fullwidth {
+            .s-control {
+                flex-grow: 1;
+                flex-shrink: 0;
+            }
+        }
+    }
+    &.s-grouped {
+        display: flex;
+        justify-content: flex-start;
+        & > .s-control {
+            &:not(:last-child) {
+                margin-bottom: 0;
+                @include ltr-property("margin", 0.75rem)
+            }
+            &.s-expanded {
+                flex-grow: 1;
+                flex-shrink: 1;
+            }
+        }
+        &#{&}--multiline {
+            flex-wrap: wrap;
+            & > .s-control {
+                &:last-child, &:not(:last-child) {
+                    margin-bottom: 0.75rem;
+                }
+            }
+            &:last-child {
+                margin-bottom: -0.75rem;
+            }
+            &:not(:last-child) {
+                margin-bottom: 0;
+            }
+        }
+    }
+    &.s-horizontal {
+        @include tab {
+            display: flex;
+        }
+    }
+    &__label {
+        .s-label {
+            font-size: inherit;
+        }
+        @include mob {
+            margin-bottom: 0.5rem;
+        }
+        @include tab {
+            flex-basis: 0;
+            flex-grow: 1;
+            flex-shrink: 0;
+            @include ltr-property("margin", 1.5rem);
+            text-align: right;
+            &.s-small {
+                font-size: $size-small;
+                padding-top: 0.375em;
+            }
+            &.s-normal {
+               padding-top: 0.375em;
+            }
+            &.s-medium {
+                font-size: $size-medium;
+                padding-top: 0.375em;
+            }
+            &.s-large {
+                font-size: $size-large;
+                padding-top: 0.375em;
+            }
+        }
+    }
+    &__body {
+        .s-field {
+            margin-bottom: 0;
+        }
+        @include tab{
+            display: flex;
+            flex: 5 1 0;
+            & > .s-field {
+                flex-shrink: 1;
+                &:not(.s-narrow) {
+                    flex-grow: 1;
+                }
+                &:not(.last-child) {
+                    @include ltr-property("margin", 0.75rem);
+                }
+
+            }
+        }
+    }
+    &__message {
+        display: block;
+        font-size: $size-small;
+        margin-top: 0.25rem;
+        @each $name, $pair in $colors {
+            $color: nth($pair, 1);
+            &.s-#{$name} {
+                color: $color;
+            }
+        }
+    }
+}
+

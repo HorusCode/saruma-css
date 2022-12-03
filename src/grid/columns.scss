@@ -1,0 +1,63 @@
+@use "sass:math";
+
+// FUNCTIONS AND MiXINS
+@function col-width($i, $columns) {
+    @return math.div(100%,$columns) * $i;
+}
+
+@function percentage($sideMargin, $grid-breakpoint) {
+    @return 100% - (($sideMargin * math.div(2, $grid-breakpoint)) * 100%);
+}
+
+@mixin col-props($i, $columns, $gutter) {
+    box-sizing: border-box;
+    width: col-width($i, $columns);
+    padding-left: $gutter;
+    padding-right: $gutter;
+    padding-top: $gutter;
+}
+
+@mixin columns-loop($name, $columns, $gutter) {
+    @for $i from 1 through $columns {
+        &-#{$name}-#{$i} {
+            @include col-props($i, $columns, $gutter);
+        }
+        &-#{$name}-shift-#{$i} {
+            margin-left: col-width($i, $columns);
+        }
+    }
+}
+
+
+// CLASSES
+.s-row {
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -$default-columns-gap;
+    margin-right: -$default-columns-gap;
+    margin-top: -$default-columns-gap;
+    &.s-no-gap {
+        margin: 0;
+        & > div {
+            padding: 0;
+        }
+
+    }
+}
+
+.s-col {
+    @include columns-loop(desk, $default-columns, $default-columns-gap);
+
+    @each $type, $var in $grid-breakpoints {
+        $columns-count: $default-columns;
+
+        @if(map_has_key($grid-types-columns-count, $type)) {
+            $columns-count: map_get($grid-types-columns-count, $type);
+        }
+
+        @media screen and (max-width: $var) {
+            @include columns-loop($type, $columns-count, $default-columns-gap);
+        }
+    }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "saruma-css",
+  "version": "1.0.0",
+  "description": "Saruma CSS Framework",
+  "main": "saruma.scss",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HorusCode/saruma-css.git"
+  },
+  "keywords": [
+    "ui",
+    "css",
+    "saruma",
+    "ux"
+  ],
+  "author": "Ilnaz Fattahov <horusm99@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HorusCode/saruma-css/issues"
+  },
+  "homepage": "https://github.com/HorusCode/saruma-css#readme"
+}

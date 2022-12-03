@@ -1,0 +1,226 @@
+$table-color: $text-strong !default;
+$table-background-color: $scheme-main !default;
+
+$table-cell-border: 1px solid $border !default;
+$table-cell-border-width: 0 0 1px !default;
+$table-cell-padding: 0.5em 0.75em !default;
+$table-cell-heading-color: $text-strong !default;
+
+$table-head-cell-border-width: 0 0 2px !default;
+$table-head-cell-color: $text-strong !default;
+$table-foot-cell-border-width: 2px 0 0 !default;
+$table-foot-cell-color: $text-strong !default;
+
+$table-head-background-color: transparent !default;
+$table-body-background-color: transparent !default;
+$table-foot-background-color: transparent !default;
+
+$table-row-hover-background-color: $scheme-main-bis !default;
+
+$table-row-active-background-color: $primary !default;
+$table-row-active-color: $primary-invert !default;
+
+$table-striped-row-even-background-color: $scheme-main-bis !default;
+$table-striped-row-even-hover-background-color: $scheme-main-ter !default;
+
+$table-empty-background-color: $scheme-main-ter;
+$table-empty-font-size: $size-medium;
+$table-empty-padding: 4em;
+
+
+.s-table {
+    @extend %block;
+    background-color: $table-background-color;
+    color: $table-color;
+    display: table;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+
+    &__td,
+    &__th {
+        border: $table-cell-border;
+        border-width: $table-cell-border-width;
+        padding: $table-cell-padding;
+        vertical-align: top;
+        // Colors
+        @each $name, $pair in $colors {
+            $color: nth($pair, 1);
+            $color-invert: nth($pair, 2);
+
+            &.s-cell-#{$name} {
+                background-color: $color;
+                border-color: $color;
+                color: $color-invert;
+            }
+        }
+        // Modifiers
+        &.s-narrow {
+            white-space: nowrap;
+            width: 1%;
+        }
+
+        &.s-selected {
+            background-color: $table-row-active-background-color;
+            color: $table-row-active-color;
+
+            a,
+            strong {
+                color: currentColor;
+            }
+        }
+
+        &.s-vcentered {
+            vertical-align: middle;
+        }
+    }
+
+    &__th {
+        color: $table-cell-heading-color;
+
+        &:not([align]) {
+            text-align: inherit;
+        }
+    }
+
+    &__tr {
+        &.s-selected {
+            background-color: $table-row-active-background-color;
+            color: $table-row-active-color;
+
+            a,
+            strong {
+                color: currentColor;
+            }
+
+            .s-table__td,
+            .s-table__th {
+                border-color: $table-row-active-color;
+                color: currentColor;
+            }
+        }
+
+        &.s-table__field {
+            background-color: transparentize($grey-lightest, 0.5);
+        }
+    }
+
+    &__thead {
+        background-color: $table-head-background-color;
+
+        .s-table__td,
+        .s-table__th {
+            border-width: $table-head-cell-border-width;
+            color: $table-head-cell-color;
+        }
+    }
+
+    &__tfoot {
+        background-color: $table-foot-background-color;
+
+        .s-table__td,
+        .s-table__th {
+            border-width: $table-foot-cell-border-width;
+            color: $table-foot-cell-color;
+        }
+    }
+
+    &__tbody {
+        background-color: $table-body-background-color;
+
+        .s-table__tr {
+            &:last-child {
+                .s-table__td,
+                .s-table__th {
+                    border-bottom-width: 0;
+                }
+            }
+        }
+    }
+
+    &__empty {
+        background-color: $table-empty-background-color;
+        font-size: $table-empty-font-size;
+        padding: $table-empty-padding;
+        text-align: center;
+    }
+
+    // Modifiers
+    &.s-bordered {
+        .s-table__td,
+        .s-table__th {
+            border-width: 1px;
+        }
+
+        .s-table__tr {
+            &:last-child {
+                .s-table__td,
+                .s-table__th {
+                    border-bottom-width: 1px;
+                }
+            }
+        }
+    }
+
+    &.s-fullwidth {
+        width: 100%;
+    }
+
+    &.s-hoverable {
+        .s-table__tbody {
+            .s-table__tr:not(.s-selected) {
+                &:hover {
+                    background-color: $table-row-hover-background-color;
+                }
+            }
+        }
+
+
+        &.s-striped {
+            .s-table__tbody {
+                tr:not(.s-selected) {
+                    &:hover {
+                        background-color: $table-row-hover-background-color;
+
+                        &:nth-child(even) {
+                            background-color: $table-striped-row-even-hover-background-color;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    &.s-narrow {
+        .s-table__td,
+        .s-table__th {
+            padding: 0.25em 0.5em;
+        }
+    }
+
+    &.s-striped {
+        .s-table__tbody {
+            .s-table__tr:not(.s-selected) {
+                &:nth-child(even) {
+                    background-color: $table-striped-row-even-background-color;
+                }
+            }
+        }
+    }
+
+
+}
+
+.s-table-container {
+    @extend %block;
+    @include overflow-touch;
+    overflow: auto;
+    overflow-y: hidden;
+    max-width: 100%;
+}
+
+.s-table-wrapper {
+    position: relative;
+    min-height: 200px;
+}

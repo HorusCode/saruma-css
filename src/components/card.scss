@@ -1,0 +1,97 @@
+//Base
+
+$card-text-color: $text !default;
+$card-background-color: $scheme-main !default;
+$card-shadow: 0 0.5em 1em -0.125em rgba($scheme-invert, 0.13), 0 0px 0 1px rgba($scheme-invert, 0.02) !default;
+$card-shadow-hover: 0 0.5em 1.5em 1px rgba($scheme-invert, 0.2), 0 0px 0 1px rgba($scheme-invert, 0.02) !default;
+
+//Header
+
+$card-header-background-color: transparent !default;
+$card-header-text-color: $text-strong !default;
+$card-header-padding: 0.75rem 1rem !default;
+$card-header-shadow: 0 0.125em 0.25em rgba($scheme-invert, 0.1) !default;
+$card-header-text-weight: $weight-bold !default;
+
+//Content
+$card-content-background-color: transparent !default;
+$card-content-padding: 1.5rem !default;
+
+//Footer
+$card-footer-background-color: transparent !default;
+$card-footer-border-top: 1px solid $border-light !default;
+$card-footer-padding: 0.75rem !default;
+
+$card-media-margin: $block-spacing !default;
+
+.s-card {
+    background-color: $card-background-color;
+    box-shadow: $card-shadow;
+    color: $card-text-color;
+    max-width: 100%;
+    position: relative;
+
+    &__media {
+        display: block;
+        position: relative;
+        img {
+            object-fit: cover;
+            height: inherit;
+        }
+    }
+
+    &__header {
+        background-color: $card-header-background-color;
+        align-items: center;
+        /*box-shadow: $card-header-shadow;*/
+        display: flex;
+    }
+
+    &__title {
+        align-items: center;
+        color: $card-header-text-color;
+        display: flex;
+        flex-grow: 1;
+        font-weight: $card-header-text-weight;
+        padding: $card-header-padding;
+        overflow-wrap: anywhere;
+        &.s-text--center {
+            justify-content: center;
+        }
+    }
+
+    &__content {
+        height: 100%;
+        background-color: $card-content-background-color;
+        padding: $card-content-padding;
+    }
+
+    &__footer {
+        background-color: $card-footer-background-color;
+        border-top: $card-footer-border-top;
+        align-items: stretch;
+        display: flex;
+        padding: $card-content-padding;
+        .s-card-footer__item {
+            align-items: center;
+            display: flex;
+            flex-basis: 0;
+            flex-grow: 1;
+            flex-shrink: 0;
+            justify-content: center;
+            padding: $card-footer-padding;
+
+            &:not(:last-child) {
+                @include ltr-property("border", $card-footer-border-top);
+            }
+        }
+    }
+
+    a > & {
+        &:hover, &.s-hovered {
+            transition: box-shadow .2s ease-in-out;
+            box-shadow: $card-shadow-hover;
+        }
+    }
+
+}
